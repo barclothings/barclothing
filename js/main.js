@@ -70,8 +70,19 @@ function applyContactLinks() {
 
   var telegramNodes = document.querySelectorAll("[data-telegram]");
   telegramNodes.forEach(function (el) {
-    el.textContent = SITE_CONFIG.telegramName;
     if (!SITE_CONFIG.telegramUrl) {
+      if (el.className.indexOf("btn") === -1 && !el.querySelector("svg")) {
+        el.textContent = SITE_CONFIG.telegramName;
+      }
+      return;
+    }
+    if (el.tagName === "A") {
+      el.setAttribute("href", SITE_CONFIG.telegramUrl);
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noopener noreferrer");
+      if (el.className.indexOf("btn") === -1 && !el.querySelector("svg")) {
+        el.textContent = SITE_CONFIG.telegramName;
+      }
       return;
     }
     var link = document.createElement("a");
